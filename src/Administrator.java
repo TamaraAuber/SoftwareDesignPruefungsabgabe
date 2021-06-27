@@ -9,7 +9,7 @@ public class Administrator {
 
     }
 
-    //ToDo: Bug wenn im Benutzernamen Leerzeichen sind
+    // ToDo: Bug wenn im Benutzernamen Leerzeichen sind
     public void logIn() {
         Scanner scan = new Scanner(System.in);
 
@@ -22,8 +22,7 @@ public class Administrator {
         if (validateLogInData(enteredUsername, enteredPassword)) {
             System.out.println("Welcome to the Batcave Mr. Wayne");
             adminOptions();
-        }
-        else{
+        } else {
             System.out.println("Activated Selfdestruction. Try again");
             logIn();
         }
@@ -49,7 +48,18 @@ public class Administrator {
 
         int selectedOption = scan.nextInt();
 
-        System.err.println("OOOOOOOOOOOOOption: " + selectedOption);
+        switch(selectedOption) {
+            case 1:
+            System.out.println("Übersicht Termine");
+            break;
+            case 2:
+            Appointment NewAppointment = new Appointment();
+            NewAppointment.createNewAppointment();
+            break;
+            case 3:
+            System.out.println("show me you stats");
+            break;
+        }
 
         scan.close();
     }
