@@ -24,16 +24,20 @@ public class Appointment {
         System.out.print("Zeitabstände zwischen den Terminen (in Minuten): ");
         int enteredTimeIntervalls = scan.nextInt();
 
-        AppointmentModel NewAppointment = new AppointmentModel(enteredDate, enteredTimePeriodStart,
+        AppointmentModel NewAppointment = new AppointmentModel(1, enteredDate, enteredTimePeriodStart,
                 enteredTimePeriodEnd, enteredConcurrentVaccinations, enteredTimeIntervalls);
 
         System.out.println(NewAppointment.toString());
 
         scan.close();
 
+        ID_Generator Generator = ID_Generator.getInstance();
+        System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIIDDDDDDDDDDD: " + Generator.generateNewId());
+        
+
         JSONHelper JSONFile = new JSONHelper();
-        JSONFile.enterAppointmentInJSONFile(NewAppointment);
-      
+        JSONFile.enterAppointmentInJSONFile(NewAppointment, 1);
+        
     }
 
 }

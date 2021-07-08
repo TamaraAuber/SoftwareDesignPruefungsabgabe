@@ -1,13 +1,15 @@
 public class AppointmentModel {
 
+    private int id;
     private String date;
     private int timePeriodStart;
     private int timePeriodEnd;
     private int concurrentVaccinations;
     private int timeIntervalls;
 
-    public AppointmentModel(String _date, int _timePeriodStart, int _timePeriodEnd, int _concurrentVaccinations,
-            int _timeIntervalls) {
+    public AppointmentModel(int _id, String _date, int _timePeriodStart, int _timePeriodEnd,
+            int _concurrentVaccinations, int _timeIntervalls) {
+        this.id = _id;
         this.date = _date;
         this.timePeriodStart = _timePeriodStart;
         this.timePeriodEnd = _timePeriodEnd;
@@ -16,7 +18,16 @@ public class AppointmentModel {
     }
 
     public String toString() {
-        return "Datum: " + date + " Zeitraum von: " + timePeriodStart + " Zeitraum bis: " + timePeriodEnd + " Gleichzeitige Impfungen: " + concurrentVaccinations + " Zeitabstände in Minuten: " + timeIntervalls;
+        return "id: " + id + " Datum: " + date + " Zeitraum von: " + timePeriodStart + " Zeitraum bis: " + timePeriodEnd
+                + " Gleichzeitige Impfungen: " + concurrentVaccinations + " Zeitabstände in Minuten: " + timeIntervalls;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setID(int _newId) {
+        id = _newId;
     }
 
     public String getDate() {

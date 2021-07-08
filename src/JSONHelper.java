@@ -5,43 +5,68 @@ import org.json.simple.parser.*;
 
 public class JSONHelper {
 
-    public void enterAppointmentInJSONFile(AppointmentModel _Appointment) {
-        /* JSONObject object = new JSONObject(); */
-        JSONArray AppointmentList = getAppointmentJSONFile();
+    public void enterAppointmentInJSONFile(AppointmentModel _Appointment, int _id) {
+        JSONObject appointmentFile = getJSONFile("src/JSONFiles/AppointmentList.json");
 
         JSONObject appointmentData = new JSONObject();
+        appointmentData.put("id", _Appointment.getId());
         appointmentData.put("Date", _Appointment.getDate());
         appointmentData.put("timePeriodStart", _Appointment.getTimePeriodStart());
         appointmentData.put("timePeriodEnd", _Appointment.getTimePeriodEnd());
         appointmentData.put("concurrentVaccinations", _Appointment.getConcurrentVaccinations());
         appointmentData.put("timeIntervalls", _Appointment.getTimeIntervalls());
 
-        JSONObject appointment = new JSONObject();
-        appointment.put("Appointment", appointmentData);
+        appointmentFile.put(_id, appointmentData);
 
-        AppointmentList.add(appointment);
+        try (FileWriter file = new FileWriter("src/JSONFiles/AppointmentList.json")) {
 
-        try (FileWriter file = new FileWriter("src/AppointmentList.json")) {
-        
-
-            file.write(AppointmentList.toJSONString());
+            file.write(appointmentFile.toJSONString());
             System.out.println("Appointment created");
-            System.out.println("AppointmentList" + AppointmentList);
         } catch (IOException e) {
             // TODO: handle exception
         }
+
     }
 
-    private JSONArray getAppointmentJSONFile() {
+    public JSONObject getJSONFile(String _fileName) {
         JSONParser parser = new JSONParser();
-        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
         try {
-            jsonArray = (JSONArray) parser.parse(new FileReader("src/AppointmentList.json"));
-            return jsonArray;
+            jsonObject = (JSONObject) parser.parse(new FileReader(_fileName));
+            return jsonObject;
 
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
-        return jsonArray;
+        return jsonObject;
     }
+
+    public void updateDataList(JSONObject _updatedDataList) {
+        try (FileWriter file = new FileWriter("src/JSONFiles/DataList.json")) {
+            file.write(_updatedDataList.toJSONString());
+            System.out.println("created first id");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateKeyValue(String _jsonFile, String _key, int _value) {
+        JSONObject fileToUpdate = getJSONFile("src/JSONFiles/DataList.json");
+        fileToUpdate.put(_key, _value);
+        try (FileWriter file = new FileWriter(_jsonFile)) {
+            file.write(fileToUpdate.toJSONString());
+            System.out.println("created first id");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     * public String getValueFrom(String _jSONFile, String _key) { Object obj =
+     * getJSONFile(_jSONFile); JSONObject jsonObject = (JSONObject) obj; String
+     * value = (String) jsonObject.get(_key);
+     * 
+     * return value; }
+     */
+
 }
