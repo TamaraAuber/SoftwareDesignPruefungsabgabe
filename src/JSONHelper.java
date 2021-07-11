@@ -2,30 +2,51 @@ import java.io.*;
 import java.util.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
+import java.io.StringWriter;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class JSONHelper {
 
-    public void enterAppointmentInJSONFile(AppointmentModel _Appointment, int _id) {
-        JSONObject appointmentFile = getJSONFile("src/JSONFiles/AppointmentList.json");
+    public void enterAppointmentInJSONFile(AppointmentModel _Appointment) {
+        JSONArray appointmentFile = getJSONArray("src/JSONFiles/AppointmentList.json");
 
-        JSONObject appointmentData = new JSONObject();
-        appointmentData.put("id", _Appointment.getId());
-        appointmentData.put("Date", _Appointment.getDate());
-        appointmentData.put("timePeriodStart", _Appointment.getTimePeriodStart());
-        appointmentData.put("timePeriodEnd", _Appointment.getTimePeriodEnd());
-        appointmentData.put("concurrentVaccinations", _Appointment.getConcurrentVaccinations());
-        appointmentData.put("timeIntervalls", _Appointment.getTimeIntervalls());
+        JSONObject appointment = new JSONObject();
+        appointment.put("ID", _Appointment.getId());
+        appointment.put("Date", _Appointment.getDate());
+        appointment.put("TimePeriodStart", _Appointment.getTimePeriodStart());
+        appointment.put("TimePeriodEnd", _Appointment.getTimePeriodEnd());
+        appointment.put("ConcurrentVaccinations", _Appointment.getConcurrentVaccinations());
+        appointment.put("FreeVaccinations", _Appointment.getFreeVaccinations());
+        appointment.put("TimeIntervalls", _Appointment.getTimeIntervalls());
 
-        appointmentFile.put(_id, appointmentData);
+        /* JSONObject appointment = new JSONObject();
+        appointment.put("Appointment", appointmentData); */
+
+        appointmentFile.add(appointment);
+
 
         try (FileWriter file = new FileWriter("src/JSONFiles/AppointmentList.json")) {
-
             file.write(appointmentFile.toJSONString());
             System.out.println("Appointment created");
         } catch (IOException e) {
-            // TODO: handle exception
+            System.out.println("Error while writing json file");
         }
 
+    }
+
+    public JSONArray getJSONArray(String _fileName) {
+        JSONParser parser = new JSONParser();
+        JSONArray jsonArray = new JSONArray();
+        try {
+            jsonArray = (JSONArray) parser.parse(new FileReader(_fileName));
+            return jsonArray;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
     }
 
     public JSONObject getJSONFile(String _fileName) {
@@ -60,13 +81,5 @@ public class JSONHelper {
             e.printStackTrace();
         }
     }
-
-    /*
-     * public String getValueFrom(String _jSONFile, String _key) { Object obj =
-     * getJSONFile(_jSONFile); JSONObject jsonObject = (JSONObject) obj; String
-     * value = (String) jsonObject.get(_key);
-     * 
-     * return value; }
-     */
 
 }

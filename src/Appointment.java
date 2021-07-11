@@ -1,4 +1,7 @@
+import java.io.FileReader;
 import java.util.Scanner;
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
 
 public class Appointment {
 
@@ -6,7 +9,7 @@ public class Appointment {
 
     }
 
-    public void createNewAppointment(){
+    public void createNewAppointment() {
         Scanner scan = new Scanner(System.in);
 
         System.out.print("Datum: ");
@@ -24,20 +27,65 @@ public class Appointment {
         System.out.print("Zeitabstände zwischen den Terminen (in Minuten): ");
         int enteredTimeIntervalls = scan.nextInt();
 
-        AppointmentModel NewAppointment = new AppointmentModel(1, enteredDate, enteredTimePeriodStart,
-                enteredTimePeriodEnd, enteredConcurrentVaccinations, enteredTimeIntervalls);
+        ID_Generator Generator = ID_Generator.getInstance();
+        int id = Generator.generateNewId();
+
+        int freeVaccinations = enteredConcurrentVaccinations;
+
+        AppointmentModel NewAppointment = new AppointmentModel(id, enteredDate, enteredTimePeriodStart,
+                enteredTimePeriodEnd, enteredConcurrentVaccinations, freeVaccinations, enteredTimeIntervalls);
 
         System.out.println(NewAppointment.toString());
 
-        scan.close();
+        JSONHelper JSONFile = new JSONHelper();
+        JSONFile.enterAppointmentInJSONFile(NewAppointment);
 
-        ID_Generator Generator = ID_Generator.getInstance();
-        System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIIDDDDDDDDDDD: " + Generator.generateNewId());
-        
+        goBackToOptions();
+        scan.close();
+    }
+
+    private void goBackToOptions() {
+        Administrator Admin = new Administrator();
+        Admin.adminOptions();
+    }
+
+    public void showAllAppoitments() {
+        /*
+         * try { JSONParser parser = new JSONParser(); Object obj = parser.parse(new
+         * FileReader("src/JSONFiles/AppointmentList.json")); JSONArray jsonObject =
+         * (JSONArray) obj; JSONObject test = (JSONObject) jsonObject.get(1);
+         * System.out.println(test); String test2 = (String) test.get("Date"); String
+         * test2 = test.get("Date").toString(); System.out.println(test2);
+         * 
+         * int test3 = Integer.parseInt(test.get("timeIntervalls").toString());
+         * System.out.println(test3); } catch (Exception e) { e.printStackTrace(); }
+         */
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Wählen Sie ein Datum!");
+
+        System.out.println("0) zurück");
 
         JSONHelper JSONFile = new JSONHelper();
-        JSONFile.enterAppointmentInJSONFile(NewAppointment, 1);
-        
+        JSONArray appointmentArray = JSONFile.getJSONArray("src/JSONFiles/AppointmentList.json");
+
+        for (int i = 0; i < appointmentArray.size(); i++) {
+            JSONObject appointment = (JSONObject) appointmentArray.get(i);
+            String appointmentDate = appointment.get("Date").toString();
+
+            System.out.println(i + 1 + ") " + appointmentDate);
+        }
+
+        int selectedOption = scan.nextInt();
+
+        if (selectedOption == 0) {
+            goBackToOptions();
+        } else {
+            
+        }
+
+        scan.close();
     }
 
 }

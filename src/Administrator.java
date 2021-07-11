@@ -37,7 +37,7 @@ public class Administrator {
         return false;
     }
 
-    private void adminOptions() {
+    public void adminOptions() {
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Wählen sie ihren nächsten Schritt");
@@ -50,11 +50,12 @@ public class Administrator {
 
         switch(selectedOption) {
             case 1:
-            System.out.println("Übersicht Termine");
+            Appointment AppointmentCase1 = new Appointment();
+            AppointmentCase1.showAllAppoitments();;
             break;
             case 2:
-            Appointment NewAppointment = new Appointment();
-            NewAppointment.createNewAppointment();
+            Appointment AppointmentCase2 = new Appointment();
+            AppointmentCase2.createNewAppointment();
             break;
             case 3:
             System.out.println("show me you stats");
@@ -63,4 +64,6 @@ public class Administrator {
 
         scan.close();
     }
+
+    
 }

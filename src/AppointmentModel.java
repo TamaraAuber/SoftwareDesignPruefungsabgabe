@@ -5,28 +5,31 @@ public class AppointmentModel {
     private int timePeriodStart;
     private int timePeriodEnd;
     private int concurrentVaccinations;
+    private int freeVaccinations;
     private int timeIntervalls;
 
     public AppointmentModel(int _id, String _date, int _timePeriodStart, int _timePeriodEnd,
-            int _concurrentVaccinations, int _timeIntervalls) {
+            int _concurrentVaccinations, int _freeVaccinations, int _timeIntervalls) {
         this.id = _id;
         this.date = _date;
         this.timePeriodStart = _timePeriodStart;
         this.timePeriodEnd = _timePeriodEnd;
         this.concurrentVaccinations = _concurrentVaccinations;
+        this.freeVaccinations = _freeVaccinations;
         this.timeIntervalls = _timeIntervalls;
     }
 
     public String toString() {
-        return "id: " + id + " Datum: " + date + " Zeitraum von: " + timePeriodStart + " Zeitraum bis: " + timePeriodEnd
-                + " Gleichzeitige Impfungen: " + concurrentVaccinations + " Zeitabstände in Minuten: " + timeIntervalls;
+        return "ID: " + id + " Datum: " + date + " Zeitraum von: " + timePeriodStart + " Zeitraum bis: " + timePeriodEnd
+                + " Gleichzeitige Impfungen: " + concurrentVaccinations + " frei verfügbare Impfungen "
+                + freeVaccinations + " Zeitabstände in Minuten: " + timeIntervalls;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setID(int _newId) {
+    public void setId(int _newId) {
         id = _newId;
     }
 
@@ -60,6 +63,14 @@ public class AppointmentModel {
 
     public void setConcurrentVaccinations(int _newConcurrentVaccinations) {
         concurrentVaccinations = _newConcurrentVaccinations;
+    }
+
+    public int getFreeVaccinations() {
+        return freeVaccinations;
+    }
+
+    public void setFreeVaccinations (int _newFreeVaccinations) {
+        freeVaccinations = _newFreeVaccinations;
     }
 
     public int getTimeIntervalls() {
