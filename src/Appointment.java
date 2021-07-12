@@ -1,6 +1,8 @@
 import java.io.FileReader;
 import java.time.LocalTime;
 import java.util.Scanner;
+import java.util.Set;
+
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 
@@ -81,11 +83,44 @@ public class Appointment {
         if (selectedOption == 0) {
             goBackToOptions();
         } else {
-            AppointmentHelper Help = new AppointmentHelper();
-            Help.createTimesForADay(LocalTime.parse("10:30"), LocalTime.parse("15:45"), 30, 3);
+            getSelectedDay(selectedOption, appointmentArray);
         }
 
         scan.close();
+    }
+
+    private void getSelectedDay(int _selectedDay, JSONArray _appointmentArray) {
+        JSONObject appointment = (JSONObject) _appointmentArray.get(_selectedDay - 1);
+
+        showAppointmentTimes(appointment);
+
+    }
+
+    private void showAppointmentTimes(JSONObject _appointment) {
+        JSONArray times = (JSONArray) _appointment.get("Times");
+
+        for (int i = 0; i < times.size(); i++) {
+            JSONObject jsonObj = (JSONObject) times.get(i);
+
+            Set<String> timeSet = jsonObj.keySet();
+
+            String time = timeSet.iterator().next();
+
+            System.out.println(time + " (" +  getFreeTimes(jsonObj, time) + ")");
+        }
+    }
+
+    private int getFreeTimes(JSONObject _time, String _timeKey) {
+        JSONArray idArray = (JSONArray) _time.get(_timeKey);
+        int freeTimesCounter = 0;
+
+        for (int i = 0; i < idArray.size(); i++) {
+            if ((long) idArray.get(i) == 0) {
+                freeTimesCounter++;
+            }
+        }
+
+        return freeTimesCounter;
     }
 
 }

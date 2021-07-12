@@ -1,14 +1,6 @@
 [
     {
         "TimePeriodEnd": "15:45",
-        "TimeIntervalls": 10,
-        "TimePeriodStart": "12:30",
-        "ID": 68,
-        "ConcurrentVaccinations": 2,
-        "Date": "03.05.2020"
-    },
-    {
-        "TimePeriodEnd": "15:45",
         "TimeIntervalls": 30,
         "Times": [
             {

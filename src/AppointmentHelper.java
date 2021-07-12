@@ -42,9 +42,7 @@ public class AppointmentHelper {
         LocalTime timeEnd = _timePeriodEnd;
 
         long timeDifference = Duration.between(timeStart, timeEnd).toMinutes();
-        System.out.println("timeDifference " + timeDifference);
         long howMuchTimes = timeDifference / _timeIntervalls;
-        System.out.println("howMuchTimes " + howMuchTimes);
 
         JSONObject firstTime = new JSONObject();
         firstTime.put(timeStart.toString(), fillIdArray(_concurrentVaccinations));
