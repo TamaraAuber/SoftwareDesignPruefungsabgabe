@@ -14,10 +14,10 @@ public class Administrator {
         Scanner scan = new Scanner(System.in);
 
         System.out.print("Benutzername: ");
-        String enteredUsername = scan.next();
+        String enteredUsername = scan.nextLine();
 
         System.out.print("Passwort: ");
-        String enteredPassword = scan.next();
+        String enteredPassword = scan.nextLine();
 
         if (validateLogInData(enteredUsername, enteredPassword)) {
             System.out.println("Welcome to the Batcave Mr. Wayne");

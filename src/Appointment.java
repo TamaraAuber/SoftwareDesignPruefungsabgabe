@@ -1,4 +1,5 @@
 import java.io.FileReader;
+import java.time.LocalTime;
 import java.util.Scanner;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
@@ -13,13 +14,13 @@ public class Appointment {
         Scanner scan = new Scanner(System.in);
 
         System.out.print("Datum: ");
-        String enteredDate = scan.next();
+        String enteredDate = scan.nextLine();
 
         System.out.print("Zeitraum von: ");
-        int enteredTimePeriodStart = scan.nextInt();
+        String enteredTimePeriodStart = scan.nextLine();
 
         System.out.print("Zeitraum bis: ");
-        int enteredTimePeriodEnd = scan.nextInt();
+        String enteredTimePeriodEnd = scan.nextLine();
 
         System.out.print("Gleichzeitig stattfindende Impfungen: ");
         int enteredConcurrentVaccinations = scan.nextInt();
@@ -30,10 +31,8 @@ public class Appointment {
         ID_Generator Generator = ID_Generator.getInstance();
         int id = Generator.generateNewId();
 
-        int freeVaccinations = enteredConcurrentVaccinations;
-
-        AppointmentModel NewAppointment = new AppointmentModel(id, enteredDate, enteredTimePeriodStart,
-                enteredTimePeriodEnd, enteredConcurrentVaccinations, freeVaccinations, enteredTimeIntervalls);
+        AppointmentModel NewAppointment = new AppointmentModel(id, enteredDate, LocalTime.parse(enteredTimePeriodStart),
+                LocalTime.parse(enteredTimePeriodEnd), enteredConcurrentVaccinations, enteredTimeIntervalls);
 
         System.out.println(NewAppointment.toString());
 
@@ -82,7 +81,8 @@ public class Appointment {
         if (selectedOption == 0) {
             goBackToOptions();
         } else {
-            
+            AppointmentHelper Help = new AppointmentHelper();
+            Help.createTimesForADay(LocalTime.parse("10:30"), LocalTime.parse("15:45"), 30, 3);
         }
 
         scan.close();

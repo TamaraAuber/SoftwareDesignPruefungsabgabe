@@ -1,1 +1,192 @@
-[{"TimePeriodEnd":15,"TimeIntervalls":10,"TimePeriodStart":3,"FreeVaccinations":2,"ID":62,"ConcurrentVaccinations":2,"Date":"12.03.2020"},{"TimePeriodEnd":19,"TimeIntervalls":15,"TimePeriodStart":13,"FreeVaccinations":4,"ID":63,"ConcurrentVaccinations":4,"Date":"01.02.2020"},{"TimePeriodEnd":20,"TimeIntervalls":5,"TimePeriodStart":14,"FreeVaccinations":3,"ID":64,"ConcurrentVaccinations":3,"Date":"27.07.2020"},{"TimePeriodEnd":15,"TimeIntervalls":10,"TimePeriodStart":11,"FreeVaccinations":3,"ID":65,"ConcurrentVaccinations":3,"Date":"24.11.2021"}]
+[
+    {
+        "TimePeriodEnd": "15:45",
+        "TimeIntervalls": 10,
+        "TimePeriodStart": "12:30",
+        "ID": 68,
+        "ConcurrentVaccinations": 2,
+        "Date": "03.05.2020"
+    },
+    {
+        "TimePeriodEnd": "15:45",
+        "TimeIntervalls": 30,
+        "Times": [
+            {
+                "10:30": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "11:00": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "11:30": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "12:00": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "12:30": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "13:00": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "13:30": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "14:00": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "14:30": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "15:00": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "15:30": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "16:00": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "TimePeriodStart": "10:30",
+        "ID": 69,
+        "ConcurrentVaccinations": 4,
+        "Date": "15.05.2020"
+    },
+    {
+        "TimePeriodEnd": "15:45",
+        "TimeIntervalls": 30,
+        "Times": [
+            {
+                "10:30": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "11:00": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "11:30": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "12:00": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "12:30": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "13:00": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "13:30": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "14:00": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "14:30": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "15:00": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "15:30": [
+                    0,
+                    0
+                ]
+            }
+        ],
+        "TimePeriodStart": "10:30",
+        "ID": 70,
+        "ConcurrentVaccinations": 2,
+        "Date": "14.12.2021"
+    }
+]

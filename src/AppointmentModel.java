@@ -1,28 +1,27 @@
+import java.time.LocalTime;
+
 public class AppointmentModel {
 
     private int id;
     private String date;
-    private int timePeriodStart;
-    private int timePeriodEnd;
+    private LocalTime timePeriodStart;
+    private LocalTime timePeriodEnd;
     private int concurrentVaccinations;
-    private int freeVaccinations;
     private int timeIntervalls;
 
-    public AppointmentModel(int _id, String _date, int _timePeriodStart, int _timePeriodEnd,
-            int _concurrentVaccinations, int _freeVaccinations, int _timeIntervalls) {
+    public AppointmentModel(int _id, String _date, LocalTime _timePeriodStart, LocalTime _timePeriodEnd,
+            int _concurrentVaccinations, int _timeIntervalls) {
         this.id = _id;
         this.date = _date;
         this.timePeriodStart = _timePeriodStart;
         this.timePeriodEnd = _timePeriodEnd;
         this.concurrentVaccinations = _concurrentVaccinations;
-        this.freeVaccinations = _freeVaccinations;
         this.timeIntervalls = _timeIntervalls;
     }
 
     public String toString() {
         return "ID: " + id + " Datum: " + date + " Zeitraum von: " + timePeriodStart + " Zeitraum bis: " + timePeriodEnd
-                + " Gleichzeitige Impfungen: " + concurrentVaccinations + " frei verfügbare Impfungen "
-                + freeVaccinations + " Zeitabstände in Minuten: " + timeIntervalls;
+                + " Gleichzeitige Impfungen: " + concurrentVaccinations + " Zeitabstände in Minuten: " + timeIntervalls;
     }
 
     public int getId() {
@@ -41,19 +40,19 @@ public class AppointmentModel {
         date = _newDate;
     }
 
-    public int getTimePeriodStart() {
+    public LocalTime getTimePeriodStart() {
         return timePeriodStart;
     }
 
-    public void setTimePeriodStart(int _newTimePeriodStart) {
+    public void setTimePeriodStart(LocalTime _newTimePeriodStart) {
         timePeriodStart = _newTimePeriodStart;
     }
 
-    public int getTimePeriodEnd() {
+    public LocalTime getTimePeriodEnd() {
         return timePeriodEnd;
     }
 
-    public void setTimePeriodEnd(int _newTimePeriodEnd) {
+    public void setTimePeriodEnd(LocalTime _newTimePeriodEnd) {
         timePeriodEnd = _newTimePeriodEnd;
     }
 
@@ -63,14 +62,6 @@ public class AppointmentModel {
 
     public void setConcurrentVaccinations(int _newConcurrentVaccinations) {
         concurrentVaccinations = _newConcurrentVaccinations;
-    }
-
-    public int getFreeVaccinations() {
-        return freeVaccinations;
-    }
-
-    public void setFreeVaccinations (int _newFreeVaccinations) {
-        freeVaccinations = _newFreeVaccinations;
     }
 
     public int getTimeIntervalls() {

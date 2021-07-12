@@ -15,11 +15,14 @@ public class JSONHelper {
         JSONObject appointment = new JSONObject();
         appointment.put("ID", _Appointment.getId());
         appointment.put("Date", _Appointment.getDate());
-        appointment.put("TimePeriodStart", _Appointment.getTimePeriodStart());
-        appointment.put("TimePeriodEnd", _Appointment.getTimePeriodEnd());
+        appointment.put("TimePeriodStart", _Appointment.getTimePeriodStart().toString());
+        appointment.put("TimePeriodEnd", _Appointment.getTimePeriodEnd().toString());
         appointment.put("ConcurrentVaccinations", _Appointment.getConcurrentVaccinations());
-        appointment.put("FreeVaccinations", _Appointment.getFreeVaccinations());
         appointment.put("TimeIntervalls", _Appointment.getTimeIntervalls());
+
+        AppointmentHelper Helper = new AppointmentHelper();
+        JSONArray times = Helper.createTimesForADay(_Appointment.getTimePeriodStart(),  _Appointment.getTimePeriodEnd(), _Appointment.getTimeIntervalls(),  _Appointment.getConcurrentVaccinations());
+        appointment.put("Times", times);
 
         /* JSONObject appointment = new JSONObject();
         appointment.put("Appointment", appointmentData); */
