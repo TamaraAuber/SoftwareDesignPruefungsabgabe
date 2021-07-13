@@ -15,13 +15,13 @@ public class Appointment {
     public void createNewAppointment() {
         Scanner scan = new Scanner(System.in);
 
-        System.out.print("Datum: ");
+        System.out.print("Datum (z.B. 12.03.2021): ");
         String enteredDate = scan.nextLine();
 
-        System.out.print("Zeitraum von: ");
+        System.out.print("Zeitraum von (z.B. 10:30): ");
         String enteredTimePeriodStart = scan.nextLine();
 
-        System.out.print("Zeitraum bis: ");
+        System.out.print("Zeitraum bis (z.B. 15:45): ");
         String enteredTimePeriodEnd = scan.nextLine();
 
         System.out.print("Gleichzeitig stattfindende Impfungen: ");
@@ -64,6 +64,8 @@ public class Appointment {
 
         Scanner scan = new Scanner(System.in);
 
+        AppointmentHelper Helper = new AppointmentHelper();
+
         System.out.println("Wählen Sie ein Datum!");
 
         System.out.println("0) zurück");
@@ -75,7 +77,11 @@ public class Appointment {
             JSONObject appointment = (JSONObject) appointmentArray.get(i);
             String appointmentDate = appointment.get("Date").toString();
 
-            System.out.println(i + 1 + ") " + appointmentDate);
+            String occupiedTimesInPercentage = String.format("%.2f",
+                    Helper.howManyPercentAreOccupied(i, appointmentArray));
+
+            System.out.println(
+                    i + 1 + ") " + appointmentDate + " [" + occupiedTimesInPercentage + "% der Termine sind besetzt]");
         }
 
         int selectedOption = scan.nextInt();
@@ -83,54 +89,34 @@ public class Appointment {
         if (selectedOption == 0) {
             goBackToOptions();
         } else {
-            getSelectedDay(selectedOption, appointmentArray);
+            if (!Helper.areAllTimesTaken(selectedOption - 1, appointmentArray)) {
+                getSelectedDay(selectedOption, appointmentArray);
+                System.out.println("0) zurück");
+                if (scan.nextInt() == 0) {
+                    goBackToOptions();
+                }
+            }
+            System.out.println("Für dieses Datum gibt es keine freien Termine.");
+            System.out.println("Wählen Sie ein anderes Datum.");
+            showAllAppoitments();
         }
 
         scan.close();
     }
 
     private void getSelectedDay(int _selectedDay, JSONArray _appointmentArray) {
+        AppointmentHelper Helper = new AppointmentHelper();
+
         JSONObject appointment = (JSONObject) _appointmentArray.get(_selectedDay - 1);
 
-        showAppointmentTimes(appointment);
+        System.out.println("Gewähltes Datum: " + appointment.get("Date"));
 
-    }
+        String occupiedTimesInPercentage = String.format("%.2f",
+                Helper.howManyPercentAreOccupied(_selectedDay - 1, _appointmentArray));
+        System.out.println("- " + occupiedTimesInPercentage + "% der Termine sind besetzt");
 
-    private void showAppointmentTimes(JSONObject _appointment) {
-        JSONArray times = (JSONArray) _appointment.get("Times");
+        Helper.showAppointmentTimes(appointment);
 
-        for (int i = 0; i < times.size(); i++) {
-            JSONObject jsonObj = (JSONObject) times.get(i);
-
-            Set<String> timeSet = jsonObj.keySet();
-
-            String time = timeSet.iterator().next();
-
-            System.out.println(time + " (" +  getFreeTimes(jsonObj, time) + ")");
-        }
-    }
-
-    private int getFreeTimes(JSONObject _time, String _timeKey) {
-        JSONArray idArray = (JSONArray) _time.get(_timeKey);
-        int freeTimesCounter = 0;
-
-        for (int i = 0; i < idArray.size(); i++) {
-            if ((long) idArray.get(i) == 0) {
-                freeTimesCounter++;
-            }
-        }
-
-        return freeTimesCounter;
     }
 
 }
-
-/*
- * import java.text.SimpleDateFormat; import java.util.Date;
- */
-
-/*
- * String sDate1 = "31/12/1998"; Date date1 = new
- * SimpleDateFormat("dd/MM/yyyy").parse(sDate1); System.out.println(sDate1 +
- * "\t" + date1);
- */
