@@ -8,6 +8,9 @@ public class ID_Generator {
     }
 
     public static ID_Generator getInstance() {
+        if (instance == null) {
+            instance = new ID_Generator();
+        }
         return instance;
     }
 
