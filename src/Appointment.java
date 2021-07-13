@@ -9,7 +9,31 @@ import org.json.simple.parser.JSONParser;
 public class Appointment {
 
     public Appointment() {
+    }
 
+    public boolean areThereFreeAppointments() {
+        AppointmentHelper Helper = new AppointmentHelper();
+        JSONHelper JSONFile = new JSONHelper();
+        JSONArray appointmentArray = JSONFile.getJSONArray("src/JSONFiles/AppointmentList.json");
+        int allAppointmentDays = appointmentArray.size();
+        int occupiedAppointmentDays = 0;
+
+        if (appointmentArray.size() == 0) {
+            return false;
+        }
+
+        for (int i = 0; i < appointmentArray.size(); i++) {
+
+            if (Helper.areAllTimesTaken(i, appointmentArray)) {
+                occupiedAppointmentDays++;
+            }
+
+            if (allAppointmentDays == occupiedAppointmentDays) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void createNewAppointment() {
@@ -50,7 +74,7 @@ public class Appointment {
         Admin.adminOptions();
     }
 
-    public void showAllAppoitments() {
+    public void showAllAppoitmentsAdmin() {
         /*
          * try { JSONParser parser = new JSONParser(); Object obj = parser.parse(new
          * FileReader("src/JSONFiles/AppointmentList.json")); JSONArray jsonObject =
@@ -98,7 +122,7 @@ public class Appointment {
             }
             System.out.println("Für dieses Datum gibt es keine freien Termine.");
             System.out.println("Wählen Sie ein anderes Datum.");
-            showAllAppoitments();
+            showAllAppoitmentsAdmin();
         }
 
         scan.close();
@@ -116,7 +140,6 @@ public class Appointment {
         System.out.println("- " + occupiedTimesInPercentage + "% der Termine sind besetzt");
 
         Helper.showAppointmentTimes(appointment);
-
     }
 
 }

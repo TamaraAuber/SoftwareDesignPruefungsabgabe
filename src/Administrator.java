@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import org.json.simple.*;
 
 public class Administrator {
 
@@ -21,6 +22,7 @@ public class Administrator {
 
         if (validateLogInData(enteredUsername, enteredPassword)) {
             System.out.println("Welcome to the Batcave Mr. Wayne");
+            adminLogIn();
             adminOptions();
         } else {
             System.out.println("Activated Selfdestruction. Try again");
@@ -37,6 +39,34 @@ public class Administrator {
         return false;
     }
 
+    private void adminLogIn() {
+        JSONHelper JSONFile = new JSONHelper();
+        JSONObject dataList = JSONFile.getJSONFile("src/JSONFiles/DataList.json");
+        try {
+            // if Administrator is logged in, value is 1 => true, else value is 0 => false
+            JSONFile.updateKeyValue("src/JSONFiles/DataList.json", "isAdminLoggedIn", 1);
+
+        } catch (Exception e) {
+            System.out.println("Faaaaaaaaaaaaaaaaaaail");
+            dataList.put("isAdminLoggedIn", 0);
+            JSONFile.updateDataList(dataList);
+        }
+    }
+
+    public void adminLogOut() {
+        JSONHelper JSONFile = new JSONHelper();
+        JSONObject dataList = JSONFile.getJSONFile("src/JSONFiles/DataList.json");
+        try {
+            // if Administrator is logged in, value is 1 => true, else value is 0 => false
+            JSONFile.updateKeyValue("src/JSONFiles/DataList.json", "isAdminLoggedIn", 0);
+
+        } catch (Exception e) {
+            System.out.println("Faaaaaaaaaaaaaaaaaaail");
+            dataList.put("isAdminLoggedIn", 0);
+            JSONFile.updateDataList(dataList);
+        }
+    }
+
     public void adminOptions() {
         Scanner scan = new Scanner(System.in);
 
@@ -48,22 +78,22 @@ public class Administrator {
 
         int selectedOption = scan.nextInt();
 
-        switch(selectedOption) {
+        switch (selectedOption) {
             case 1:
-            Appointment AppointmentCase1 = new Appointment();
-            AppointmentCase1.showAllAppoitments();;
-            break;
+                Appointment AppointmentCase1 = new Appointment();
+                AppointmentCase1.showAllAppoitmentsAdmin();
+                ;
+                break;
             case 2:
-            Appointment AppointmentCase2 = new Appointment();
-            AppointmentCase2.createNewAppointment();
-            break;
+                Appointment AppointmentCase2 = new Appointment();
+                AppointmentCase2.createNewAppointment();
+                break;
             case 3:
-            System.out.println("show me you stats");
-            break;
+                System.out.println("show me you stats");
+                break;
         }
 
         scan.close();
     }
 
-    
 }

@@ -47,7 +47,7 @@ public class JSONHelper {
             return jsonArray;
 
         } catch (Exception e) {
-            e.printStackTrace();
+           /*  e.printStackTrace(); */
         }
         return jsonArray;
     }
@@ -79,7 +79,6 @@ public class JSONHelper {
         fileToUpdate.put(_key, _value);
         try (FileWriter file = new FileWriter(_jsonFile)) {
             file.write(fileToUpdate.toJSONString());
-            System.out.println("created first id");
         } catch (IOException e) {
             e.printStackTrace();
         }

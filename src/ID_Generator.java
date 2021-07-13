@@ -20,7 +20,7 @@ public class ID_Generator {
         int lastId = getLastUsedId();
         int newId = lastId + 1;
         System.out.println("newId: " + newId + " lastId: " + lastId);
-        JSONFile.updateKeyValue("src/JSONFiles/DataList.json", "lastUsedId", newId);;
+        JSONFile.updateKeyValue("src/JSONFiles/DataList.json", "lastUsedId", newId);
         return newId;
     }
 
