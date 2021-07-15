@@ -1,15 +1,16 @@
 import java.time.LocalTime;
+import java.time.LocalDate;
 
 public class AppointmentModel {
 
     private int id;
-    private String date;
+    private LocalDate date;
     private LocalTime timePeriodStart;
     private LocalTime timePeriodEnd;
     private int concurrentVaccinations;
     private int timeIntervalls;
 
-    public AppointmentModel(int _id, String _date, LocalTime _timePeriodStart, LocalTime _timePeriodEnd,
+    public AppointmentModel(int _id, LocalDate _date, LocalTime _timePeriodStart, LocalTime _timePeriodEnd,
             int _concurrentVaccinations, int _timeIntervalls) {
         this.id = _id;
         this.date = _date;
@@ -32,11 +33,11 @@ public class AppointmentModel {
         id = _newId;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String _newDate) {
+    public void setDate(LocalDate _newDate) {
         date = _newDate;
     }
 

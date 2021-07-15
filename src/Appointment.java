@@ -1,5 +1,7 @@
 import java.io.FileReader;
 import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -42,10 +44,10 @@ public class Appointment {
         System.out.print("Datum (z.B. 12.03.2021): ");
         String enteredDate = scan.nextLine();
 
-        System.out.print("Zeitraum von (z.B. 10:30): ");
+        System.out.print("Zeitraum von (z.B. 09:30): ");
         String enteredTimePeriodStart = scan.nextLine();
 
-        System.out.print("Zeitraum bis (z.B. 15:45): ");
+        System.out.print("Zeitraum bis (z.B. 10:45): ");
         String enteredTimePeriodEnd = scan.nextLine();
 
         System.out.print("Gleichzeitig stattfindende Impfungen: ");
@@ -57,15 +59,23 @@ public class Appointment {
         ID_Generator Generator = ID_Generator.getInstance();
         int id = Generator.generateNewId();
 
-        AppointmentModel NewAppointment = new AppointmentModel(id, enteredDate, LocalTime.parse(enteredTimePeriodStart),
-                LocalTime.parse(enteredTimePeriodEnd), enteredConcurrentVaccinations, enteredTimeIntervalls);
+        try {
+            AppointmentModel NewAppointment = new AppointmentModel(id,
+                    LocalDate.parse(enteredDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+                    LocalTime.parse(enteredTimePeriodStart), LocalTime.parse(enteredTimePeriodEnd),
+                    enteredConcurrentVaccinations, enteredTimeIntervalls);
 
-        System.out.println(NewAppointment.toString());
+            System.out.println(NewAppointment.toString());
 
-        JSONHelper JSONFile = new JSONHelper();
-        JSONFile.enterAppointmentInJSONFile(NewAppointment);
+            JSONHelper JSONFile = new JSONHelper();
+            JSONFile.enterAppointmentInJSONFile(NewAppointment);
 
-        goBackToOptions();
+            goBackToOptions();
+        } catch (Exception e) {
+            System.out.println("Irgendwas ist schief gelaufen. Versuchen sie es erneut.");
+            createNewAppointment();
+        }
+
         scan.close();
     }
 

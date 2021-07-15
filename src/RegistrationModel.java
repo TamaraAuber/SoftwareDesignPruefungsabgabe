@@ -3,6 +3,7 @@ public class RegistrationModel {
     // in der JSON Datei dnn noch JSONObjekt "Appointment hinzufügen" wo dann id und
     // Uhrzeit drinstehen
 
+    private int id;
     private String eMail;
     private String firstName;
     private String lastName;
@@ -13,12 +14,9 @@ public class RegistrationModel {
     private int postalCode;
     private String city;
 
-    //oder Registrierung id geben und dadurch dem Termin hinzufügen
-    private int appointmentId;
-    private int appointmentTime;
-
-    public RegistrationModel(String _eMail, String _firstName, String _lastName, String _birthDate, int _phoneNumber,
-            String _street, int _houseNumber, int _postalCode, String _city) {
+    public RegistrationModel(int _id, String _eMail, String _firstName, String _lastName, String _birthDate,
+            int _phoneNumber, String _street, int _houseNumber, int _postalCode, String _city) {
+        this.id = _id;
         this.eMail = _eMail;
         this.firstName = _firstName;
         this.lastName = _lastName;
@@ -31,9 +29,17 @@ public class RegistrationModel {
     }
 
     public String toString() {
-        return "E-MAil: " + eMail + " Vorname: " + firstName + " Nachname: " + lastName + " Geburtsdatum: " + birthDate
+        return "ID: " + id + " E-MAil: " + eMail + " Vorname: " + firstName + " Nachname: " + lastName + " Geburtsdatum: " + birthDate
                 + " TelefonNummer: " + phoneNumber + " Adresse: " + street + " " + houseNumber + ", " + postalCode
                 + city;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int _newId) {
+        id = _newId;
     }
 
     public String getEMail() {

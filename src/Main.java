@@ -23,7 +23,7 @@ public class Main {
         if (Appointment.areThereFreeAppointments()) {
             System.out.println("1) Termin buchen");
         } else {
-            System.out.println("Keine freien Termine verfügbar");
+            System.out.println("Momentan sind keine freien Termine verfügbar");
             System.out.println("1) in die Warteliste eintragen");
         }
 
@@ -47,10 +47,11 @@ public class Main {
 
     private static void chooseCase1ForUser() {
         Appointment Appointment = new Appointment();
+        User User = new User();
         if (Appointment.areThereFreeAppointments()) {
-            System.out.println("Option Termin buchen");
+            User.userOptions();
         } else {
-            System.out.println("Option Warteliste");
+            User.registerForWaitingList();
         }
     }
 }
