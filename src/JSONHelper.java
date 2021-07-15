@@ -63,7 +63,7 @@ public class JSONHelper {
         registration.put("EMail", _Registration.getEMail());
         registration.put("FirstName", _Registration.getFirstName());
         registration.put("LastName", _Registration.getLastName());
-        registration.put("BirthDate", _Registration.getBirthDate());
+        registration.put("BirthDate", _Registration.getBirthDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         registration.put("PhoneNumber", _Registration.getPhoneNumber());
         registration.put("Street", _Registration.getStreet());
         registration.put("HouseNumber", _Registration.getHouseNumber());

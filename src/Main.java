@@ -19,8 +19,8 @@ public class Main {
         System.out.println("Termin buchen oder als Administrator fortfahren?");
         System.out.println("Wählen sie dazu eine der Nummern aus");
 
-        Appointment Appointment = new Appointment();
-        if (Appointment.areThereFreeAppointments()) {
+        AppointmentHelper AppointmentHelper = new AppointmentHelper();
+        if (AppointmentHelper.areThereFreeAppointments()) {
             System.out.println("1) Termin buchen");
         } else {
             System.out.println("Momentan sind keine freien Termine verfügbar");
@@ -46,9 +46,9 @@ public class Main {
     }
 
     private static void chooseCase1ForUser() {
-        Appointment Appointment = new Appointment();
+        AppointmentHelper AppointmentHelper = new AppointmentHelper();
         User User = new User();
-        if (Appointment.areThereFreeAppointments()) {
+        if (AppointmentHelper.areThereFreeAppointments()) {
             User.userOptions();
         } else {
             User.registerForWaitingList();

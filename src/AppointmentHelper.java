@@ -15,25 +15,31 @@ public class AppointmentHelper {
     public AppointmentHelper() {
     }
 
-    /*
-     * public Date parseDate(String date) {
-     * 
-     * String sDate1 = "31/12/1998"; Date date1 = null; try { date1 = new
-     * SimpleDateFormat("dd/MM/yyyy").parse(sDate1); System.out.println(sDate1 +
-     * "\t" + date1); } catch (ParseException e) { e.printStackTrace(); } return
-     * date1;
-     * 
-     * 
-     * Calendar myCalendar = new GregorianCalendar(2014, 2, 11); Date myDate =
-     * myCalendar.getTime(); System.out.println(my); return myDate; }
-     */
+     // scans the entire appointment list for free appointments
+     public boolean areThereFreeAppointments() {
+        AppointmentHelper Helper = new AppointmentHelper();
+        JSONHelper JSONFile = new JSONHelper();
+        JSONArray appointmentArray = JSONFile.getJSONArray("src/JSONFiles/AppointmentList.json");
+        int allAppointmentDays = appointmentArray.size();
+        int occupiedAppointmentDays = 0;
 
-    /*
-     * LocalTime time1 = LocalTime.parse("10:45"); System.out.println(time1);
-     * LocalTime time2 = LocalTime.parse("11:30"); System.out.println(time2); long
-     * time3 = Duration.between(time1, time2).toMinutes();
-     * System.out.println(time3);
-     */
+        if (appointmentArray.size() == 0) {
+            return false;
+        }
+
+        for (int i = 0; i < appointmentArray.size(); i++) {
+
+            if (Helper.areAllTimesTaken(i, appointmentArray)) {
+                occupiedAppointmentDays++;
+            }
+
+            if (allAppointmentDays == occupiedAppointmentDays) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public JSONArray createTimesForADay(LocalTime _timePeriodStart, LocalTime _timePeriodEnd, int _timeIntervalls,
             int _concurrentVaccinations) {

@@ -34,5 +34,53 @@
         "City": "k",
         "EMail": "hanna.schmidt@gmail.com",
         "BirthDate": "k"
+    },
+    {
+        "HouseNumber": 12,
+        "FirstName": "jij",
+        "PhoneNumber": 1313,
+        "Street": "efw",
+        "PostalCode": 12,
+        "ID": 104,
+        "LastName": "ihi",
+        "City": "qewq",
+        "EMail": "huih",
+        "BirthDate": "12-12-1212"
+    },
+    {
+        "HouseNumber": 12,
+        "FirstName": "test",
+        "PhoneNumber": 1313,
+        "Street": "dw",
+        "PostalCode": 1341,
+        "ID": 105,
+        "LastName": "erer",
+        "City": "fw",
+        "EMail": "hvuzvuzg",
+        "BirthDate": "12-12-1212"
+    },
+    {
+        "HouseNumber": 12,
+        "FirstName": "wefw",
+        "PhoneNumber": 12345,
+        "Street": "sefe",
+        "PostalCode": 1234,
+        "ID": 107,
+        "LastName": "wefwe",
+        "City": "sf",
+        "EMail": "Tes@gmail.com",
+        "BirthDate": "13-04-1070"
+    },
+    {
+        "HouseNumber": 13,
+        "FirstName": "Hans",
+        "PhoneNumber": 12434,
+        "Street": "Bachstrasse",
+        "PostalCode": 12345,
+        "ID": 108,
+        "LastName": "Mueller",
+        "City": "Wasserstadt",
+        "EMail": "Hans.Mueller@gmail.com",
+        "BirthDate": "14-01-1980"
     }
 ]

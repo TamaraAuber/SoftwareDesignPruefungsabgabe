@@ -13,31 +13,6 @@ public class Appointment {
     public Appointment() {
     }
 
-    public boolean areThereFreeAppointments() {
-        AppointmentHelper Helper = new AppointmentHelper();
-        JSONHelper JSONFile = new JSONHelper();
-        JSONArray appointmentArray = JSONFile.getJSONArray("src/JSONFiles/AppointmentList.json");
-        int allAppointmentDays = appointmentArray.size();
-        int occupiedAppointmentDays = 0;
-
-        if (appointmentArray.size() == 0) {
-            return false;
-        }
-
-        for (int i = 0; i < appointmentArray.size(); i++) {
-
-            if (Helper.areAllTimesTaken(i, appointmentArray)) {
-                occupiedAppointmentDays++;
-            }
-
-            if (allAppointmentDays == occupiedAppointmentDays) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public void createNewAppointment() {
         Scanner scan = new Scanner(System.in);
 
@@ -85,17 +60,6 @@ public class Appointment {
     }
 
     public void showAllAppoitmentsAdmin() {
-        /*
-         * try { JSONParser parser = new JSONParser(); Object obj = parser.parse(new
-         * FileReader("src/JSONFiles/AppointmentList.json")); JSONArray jsonObject =
-         * (JSONArray) obj; JSONObject test = (JSONObject) jsonObject.get(1);
-         * System.out.println(test); String test2 = (String) test.get("Date"); String
-         * test2 = test.get("Date").toString(); System.out.println(test2);
-         * 
-         * int test3 = Integer.parseInt(test.get("timeIntervalls").toString());
-         * System.out.println(test3); } catch (Exception e) { e.printStackTrace(); }
-         */
-
         Scanner scan = new Scanner(System.in);
 
         AppointmentHelper Helper = new AppointmentHelper();

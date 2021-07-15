@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class RegistrationModel {
 
     // in der JSON Datei dnn noch JSONObjekt "Appointment hinzufügen" wo dann id und
@@ -7,14 +9,14 @@ public class RegistrationModel {
     private String eMail;
     private String firstName;
     private String lastName;
-    private String birthDate;
+    private LocalDate birthDate;
     private int phoneNumber;
     private String street;
     private int houseNumber;
     private int postalCode;
     private String city;
 
-    public RegistrationModel(int _id, String _eMail, String _firstName, String _lastName, String _birthDate,
+    public RegistrationModel(int _id, String _eMail, String _firstName, String _lastName, LocalDate _birthDate,
             int _phoneNumber, String _street, int _houseNumber, int _postalCode, String _city) {
         this.id = _id;
         this.eMail = _eMail;
@@ -66,11 +68,11 @@ public class RegistrationModel {
         lastName = _newLastName;
     }
 
-    public String getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String _newBirthdate) {
+    public void setBirthDate(LocalDate _newBirthdate) {
         birthDate = _newBirthdate;
     }
 

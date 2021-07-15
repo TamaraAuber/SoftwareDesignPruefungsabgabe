@@ -1,5 +1,10 @@
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.json.simple.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class User {
 
@@ -22,7 +27,9 @@ public class User {
                 break;
             case 2:
                 System.out.println("Geben sie das gesuchte Datum ein:");
-                String searchedDate = scanString.nextLine();
+                String enteredDate = scanString.nextLine();
+                LocalDate date =  LocalDate.parse(enteredDate, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                String searchedDate = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                 searchForDate(searchedDate);
                 break;
         }
@@ -36,8 +43,15 @@ public class User {
     }
 
     public void registerForWaitingList() {
-        JSONHelper JSONFile = new JSONHelper();
-        JSONFile.enterRegitrationInWaitingList(enterRegistrationData());
+
+        try {
+            JSONHelper JSONFile = new JSONHelper();
+            JSONFile.enterRegitrationInWaitingList(enterRegistrationData());
+        } catch (Exception e) {
+            System.out.println("Irgendwas ist schiefgelaufen. Versuchen sie es erneut.");
+            registerForWaitingList();
+        }
+
     }
 
     private RegistrationModel enterRegistrationData() {
@@ -46,9 +60,7 @@ public class User {
 
         System.out.println("Bei der Registrierung bitte keine Sonderzeichen benutzen.");
 
-        System.out.print("E-Mail: ");
-        String enteredEMail = scanString.nextLine();
-        // isEmailAlreadyUsed(enteredEMail);
+        String enteredEMail = getEMailAdress(scanString);
 
         System.out.print("Vorname: ");
         String enteredFirstName = scanString.nextLine();
@@ -56,7 +68,7 @@ public class User {
         System.out.print("Nachname: ");
         String enteredLastName = scanString.nextLine();
 
-        System.out.print("Geburtsdatum: ");
+        System.out.print("Geburtsdatum (z.B. 01.01.1970): ");
         String enteredBirthDate = scanString.nextLine();
 
         System.out.print("Telefonnummer: ");
@@ -80,22 +92,32 @@ public class User {
         int id = Generator.generateNewId();
 
         RegistrationModel Registration = new RegistrationModel(id, enteredEMail, enteredFirstName, enteredLastName,
-                enteredBirthDate, enteredPhoneNumber, enteredStreet, enteredHouseNumber, enteredPostalCode,
-                enteredCity);
+                LocalDate.parse(enteredBirthDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")), enteredPhoneNumber,
+                enteredStreet, enteredHouseNumber, enteredPostalCode, enteredCity);
+
+        scanString.close();
+        scanInt.close();
 
         return Registration;
     }
 
-    private void isEmailAlreadyUsed(String _eMail) {
+    private String getEMailAdress(Scanner _scan) {
+        System.out.print("E-Mail: ");
+        String enteredEMail = _scan.nextLine();
+
         JSONHelper Helper = new JSONHelper();
         JSONArray registrationList = Helper.getJSONArray("src/JSONFiles/RegistrationList.json");
         JSONArray waitingList = Helper.getJSONArray("src/JSONFiles/WaitingList.json");
-
-        if (findEmailInList(_eMail, registrationList) || findEmailInList(_eMail, waitingList)) {
-            System.out
-                    .println("Diese E-Mail-Adresse ist bereits registriert. Geben Sie eine andere E-Mail-Adresse ein!");
-            enterRegistrationData();
+        if (findEmailInList(enteredEMail, registrationList) || findEmailInList(enteredEMail, waitingList)) {
+            System.out.println("Diese E-Mail-Adresse ist bereits registriert. Geben Sie eine andere E-Mail-Adresse ein!");
+            enteredEMail = getEMailAdress(_scan);
         }
+        if (!validateEMail(enteredEMail)) {
+            System.out.println("Dies ist keine gültige E-Mail-Adresse. Geben Sie eine andere E-Mail-Adresse ein!");
+            enteredEMail = getEMailAdress(_scan);
+        }
+        
+        return enteredEMail;
     }
 
     private boolean findEmailInList(String _eMail, JSONArray _list) {
@@ -107,6 +129,13 @@ public class User {
             }
         }
         return false;
+    }
+
+    private boolean validateEMail(String _eMail) {
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(_eMail);
+        return matcher.matches();
     }
 
     private void searchForDate(String _searchedDate) {
@@ -141,7 +170,7 @@ public class User {
 
         if (!Helper.areAllTimesTaken(_indexOfDate, _appointmentArray)) {
 
-            Appointment.getSelectedDay(_indexOfDate+1, _appointmentArray);
+            Appointment.getSelectedDay(_indexOfDate + 1, _appointmentArray);
         } else {
             System.out.println("Für dieses Datum sind alle Termine bereits vergeben.");
             userOptions();
