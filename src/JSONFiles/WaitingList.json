@@ -1,0 +1,38 @@
+[
+    {
+        "HouseNumber": 31,
+        "FirstName": "Fritz",
+        "PhoneNumber": 12345556,
+        "Street": "Tannenstrasse",
+        "PostalCode": 34665,
+        "ID": 84,
+        "LastName": "Mueller",
+        "City": "Waldstadt",
+        "EMail": "fritz.mueller@gmail.com",
+        "BirthDate": "13.05.1970"
+    },
+    {
+        "HouseNumber": 22,
+        "FirstName": "Hanna",
+        "PhoneNumber": 543217,
+        "Street": "Lindenstrasse",
+        "PostalCode": 34665,
+        "ID": 86,
+        "LastName": "Schmidt",
+        "City": "Waldstadt",
+        "EMail": "hanna.schmidt@gmail.com",
+        "BirthDate": "12.02.1999"
+    },
+    {
+        "HouseNumber": 0,
+        "FirstName": "k",
+        "PhoneNumber": 9,
+        "Street": "i",
+        "PostalCode": 9,
+        "ID": 90,
+        "LastName": "k",
+        "City": "k",
+        "EMail": "hanna.schmidt@gmail.com",
+        "BirthDate": "k"
+    }
+]

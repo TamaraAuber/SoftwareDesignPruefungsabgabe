@@ -128,7 +128,7 @@ public class Appointment {
         scan.close();
     }
 
-    private void getSelectedDay(int _selectedDay, JSONArray _appointmentArray) {
+    public void getSelectedDay(int _selectedDay, JSONArray _appointmentArray) {
         AppointmentHelper Helper = new AppointmentHelper();
 
         JSONObject appointment = (JSONObject) _appointmentArray.get(_selectedDay - 1);

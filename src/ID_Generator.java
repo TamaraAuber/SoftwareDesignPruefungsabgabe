@@ -19,7 +19,7 @@ public class ID_Generator {
 
         int lastId = getLastUsedId();
         int newId = lastId + 1;
-        System.out.println("newId: " + newId + " lastId: " + lastId);
+        //System.out.println("newId: " + newId + " lastId: " + lastId);
         JSONFile.updateKeyValue("src/JSONFiles/DataList.json", "lastUsedId", newId);
         return newId;
     }
@@ -32,11 +32,11 @@ public class ID_Generator {
         try {
             long value = (long) dataList.get("lastUsedId");
             lastUsedId = (int) value;
-            System.out.println("LastUsedId:  " + lastUsedId);
+            //System.out.println("LastUsedId:  " + lastUsedId);
         
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Faaaaaaaaaaaaaaaaaaail");
+            //System.out.println("Faaaaaaaaaaaaaaaaaaail");
             lastUsedId = 0;
             dataList.put("lastUsedId", 0);
             JSONFile.updateDataList(dataList);
