@@ -56,10 +56,19 @@ public class Appointment {
 
     private void goBackToOptions() {
         Administrator Admin = new Administrator();
-        Admin.adminOptions();
+        User User = new User();
+        JSONHelper Helper = new JSONHelper();
+        JSONObject dataList = Helper.getJSONFile("src/JSONFiles/DataList.json");
+        long isAdminLoggedIn = (long) dataList.get("isAdminLoggedIn");
+
+        if (isAdminLoggedIn == 1) {
+            Admin.adminOptions();
+        } else {
+            User.userOptions();
+        }
     }
 
-    public void showAllAppoitmentsAdmin() {
+    public void showAllAppoitments() {
         Scanner scan = new Scanner(System.in);
 
         AppointmentHelper Helper = new AppointmentHelper();
@@ -93,10 +102,12 @@ public class Appointment {
                 if (scan.nextInt() == 0) {
                     goBackToOptions();
                 }
+            } else {
+                System.out.println("Für dieses Datum gibt es keine freien Termine.");
+                System.out.println("Wählen Sie ein anderes Datum.");
+                showAllAppoitments();
             }
-            System.out.println("Für dieses Datum gibt es keine freien Termine.");
-            System.out.println("Wählen Sie ein anderes Datum.");
-            showAllAppoitmentsAdmin();
+
         }
 
         scan.close();
@@ -114,6 +125,14 @@ public class Appointment {
         System.out.println("- " + occupiedTimesInPercentage + "% der Termine sind besetzt");
 
         Helper.showAppointmentTimes(appointment);
+
+        noteIdOfSelectedDate(Integer.parseInt(appointment.get("ID").toString()));
+    }
+
+    // writes down the id of the selected day to use it later for user registration
+    private void noteIdOfSelectedDate(int _idOfSelectedDate) {
+        JSONHelper Helper = new JSONHelper();
+        Helper.updateKeyValue("src/JSONFiles/DataList.json", "IdOfLastSelectedDate", _idOfSelectedDate);
     }
 
 }

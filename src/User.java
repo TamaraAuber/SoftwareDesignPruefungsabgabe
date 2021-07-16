@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import org.json.simple.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
 public class User {
 
@@ -15,6 +16,7 @@ public class User {
     public void userOptions() {
         Scanner scanInt = new Scanner(System.in);
         Scanner scanString = new Scanner(System.in);
+        Scanner scanOption = new Scanner(System.in);
 
         System.out.println("1) Übersicht aller Termine");
         System.out.println("2) nach Datum suchen");
@@ -23,12 +25,21 @@ public class User {
 
         switch (selectedOption) {
             case 1:
-                System.out.println("alle Termine");
+                Appointment Appointment = new Appointment();
+                Appointment.showAllAppoitments();
+                test();
+
+                /*
+                 * JSONHelper Helper = new JSONHelper(); JSONObject dataList =
+                 * Helper.getJSONFile("src/JSONFiles/DataList.json"); long idOfSelectedDay =
+                 * (long) dataList.get("IdOfLastSelectedDate"); registerForAppointment((int)
+                 * idOfSelectedDay, selectedTime);
+                 */
                 break;
             case 2:
                 System.out.println("Geben sie das gesuchte Datum ein:");
                 String enteredDate = scanString.nextLine();
-                LocalDate date =  LocalDate.parse(enteredDate, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                LocalDate date = LocalDate.parse(enteredDate, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
                 String searchedDate = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                 searchForDate(searchedDate);
                 break;
@@ -38,15 +49,70 @@ public class User {
         scanString.close();
     }
 
-    public void registerForAppointment() {
+    private void test() {
+        Scanner scanInt = new Scanner(System.in);
+       
+        int selectedTime = scanInt.nextInt();
 
+        System.out.println(selectedTime);
+
+        scanInt.close();
+    }
+
+    public void registerForAppointment(int _chosenDateId, int _chosenTimeIndex) {
+        System.out.println("ID " + _chosenDateId + " time " + _chosenTimeIndex);
+        JSONHelper JSONFile = new JSONHelper();
+
+        try {
+            RegistrationModel registration = enterRegistrationData();
+
+            int registrationID = registration.getId();
+
+            linkAppointmentWithRegistration(JSONFile, _chosenDateId, _chosenTimeIndex, registrationID);
+
+            JSONFile.enterRegitrationInList(registration, "src/JSONFiles/RegistrationList.json");
+
+        } catch (Exception e) {
+            System.out.println("Irgendwas ist schiefgelaufen. Versuchen sie es erneut.");
+            registerForAppointment(_chosenDateId, _chosenTimeIndex);
+        }
+
+    }
+
+    private void linkAppointmentWithRegistration(JSONHelper JSONFile, int _chosenDateID, int _chosenTimeIndex,
+            int _registrationID) {
+
+        JSONArray appointmentList = JSONFile.getJSONArray("src/JSONFiles/AppointmentList.json");
+        for (int i = 0; i < appointmentList.size(); i++) {
+            JSONObject appointment = (JSONObject) appointmentList.get(i);
+
+            if (Integer.parseInt(appointment.get("ID").toString()) == _chosenDateID) {
+                JSONArray appointmentTimes = (JSONArray) appointment.get("Times");
+
+                JSONObject chosenTime = (JSONObject) appointmentTimes.get(_chosenTimeIndex - 1);
+
+                Set<String> timeSet = chosenTime.keySet();
+                String time = timeSet.iterator().next();
+
+                JSONArray timeSlots = (JSONArray) chosenTime.get(time);
+
+                for (int x = 0; x < timeSlots.size(); x++) {
+                    if (Integer.parseInt(timeSlots.get(x).toString()) == 0) {
+                        timeSlots.set(x, _registrationID);
+                        break;
+                    }
+                }
+
+            }
+        }
+        JSONFile.updateJSONFile(appointmentList);
     }
 
     public void registerForWaitingList() {
 
         try {
             JSONHelper JSONFile = new JSONHelper();
-            JSONFile.enterRegitrationInWaitingList(enterRegistrationData());
+            JSONFile.enterRegitrationInList(enterRegistrationData(), "src/JSONFiles/WaitingList.json");
         } catch (Exception e) {
             System.out.println("Irgendwas ist schiefgelaufen. Versuchen sie es erneut.");
             registerForWaitingList();
@@ -58,7 +124,7 @@ public class User {
         Scanner scanString = new Scanner(System.in);
         Scanner scanInt = new Scanner(System.in);
 
-        System.out.println("Bei der Registrierung bitte keine Sonderzeichen benutzen.");
+        System.out.println("Bei der Registrierung bitte keine Sonderzeichen benutzen (ä, ö, ü, ß).");
 
         String enteredEMail = getEMailAdress(scanString);
 
@@ -109,14 +175,15 @@ public class User {
         JSONArray registrationList = Helper.getJSONArray("src/JSONFiles/RegistrationList.json");
         JSONArray waitingList = Helper.getJSONArray("src/JSONFiles/WaitingList.json");
         if (findEmailInList(enteredEMail, registrationList) || findEmailInList(enteredEMail, waitingList)) {
-            System.out.println("Diese E-Mail-Adresse ist bereits registriert. Geben Sie eine andere E-Mail-Adresse ein!");
+            System.out
+                    .println("Diese E-Mail-Adresse ist bereits registriert. Geben Sie eine andere E-Mail-Adresse ein!");
             enteredEMail = getEMailAdress(_scan);
         }
         if (!validateEMail(enteredEMail)) {
             System.out.println("Dies ist keine gültige E-Mail-Adresse. Geben Sie eine andere E-Mail-Adresse ein!");
             enteredEMail = getEMailAdress(_scan);
         }
-        
+
         return enteredEMail;
     }
 
@@ -165,15 +232,30 @@ public class User {
     }
 
     private void hasAppointmentFreeTimes(int _indexOfDate, JSONArray _appointmentArray) {
+        Scanner scan = new Scanner(System.in);
         Appointment Appointment = new Appointment();
         AppointmentHelper Helper = new AppointmentHelper();
 
         if (!Helper.areAllTimesTaken(_indexOfDate, _appointmentArray)) {
+            System.out.println("0) zurück");
+            System.out.println("Wählen Sie eine Uhrzeit für die Sie sich registrieren möchten.");
 
             Appointment.getSelectedDay(_indexOfDate + 1, _appointmentArray);
+
+            int selectedOption = scan.nextInt();
+
+            if (selectedOption == 0) {
+                userOptions();
+            } else {
+                JSONObject appointment = (JSONObject) _appointmentArray.get(_indexOfDate);
+                registerForAppointment(Integer.parseInt(appointment.get("ID").toString()), selectedOption);
+            }
+
         } else {
             System.out.println("Für dieses Datum sind alle Termine bereits vergeben.");
             userOptions();
         }
+        scan.close();
     }
+
 }

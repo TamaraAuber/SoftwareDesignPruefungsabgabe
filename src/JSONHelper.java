@@ -55,8 +55,8 @@ public class JSONHelper {
         }
     }
 
-    public void enterRegitrationInWaitingList(RegistrationModel _Registration) {
-        JSONArray waitingList = getJSONArray("src/JSONFiles/WaitingList.json");
+    public void enterRegitrationInList(RegistrationModel _Registration, String _jsonFile) {
+        JSONArray waitingList = getJSONArray(_jsonFile);
 
         JSONObject registration = new JSONObject();
         registration.put("ID", _Registration.getId());
@@ -72,7 +72,7 @@ public class JSONHelper {
 
         waitingList.add(registration);
 
-        try (FileWriter file = new FileWriter("src/JSONFiles/WaitingList.json")) {
+        try (FileWriter file = new FileWriter(_jsonFile)) {
             file.write(waitingList.toJSONString());
             System.out.println("Registration entered");
         } catch (IOException e) {
@@ -103,12 +103,21 @@ public class JSONHelper {
     }
 
     public void updateKeyValue(String _jsonFile, String _key, int _value) {
-        JSONObject fileToUpdate = getJSONFile("src/JSONFiles/DataList.json");
+        JSONObject fileToUpdate = getJSONFile(_jsonFile);
         fileToUpdate.put(_key, _value);
         try (FileWriter file = new FileWriter(_jsonFile)) {
             file.write(fileToUpdate.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void updateJSONFile(JSONArray _jsonFile) {
+        try (FileWriter file = new FileWriter("src/JSONFiles/AppointmentList.json")) {
+            file.write(_jsonFile.toJSONString());
+            System.out.println("updated File");
+        } catch (IOException e) {
+            System.out.println("Error while writing json file");
         }
     }
 

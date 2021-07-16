@@ -15,8 +15,8 @@ public class AppointmentHelper {
     public AppointmentHelper() {
     }
 
-     // scans the entire appointment list for free appointments
-     public boolean areThereFreeAppointments() {
+    // scans the entire appointment list for free appointments
+    public boolean areThereFreeAppointments() {
         AppointmentHelper Helper = new AppointmentHelper();
         JSONHelper JSONFile = new JSONHelper();
         JSONArray appointmentArray = JSONFile.getJSONArray("src/JSONFiles/AppointmentList.json");
@@ -123,7 +123,25 @@ public class AppointmentHelper {
 
             String time = timeSet.iterator().next();
 
-            System.out.println("    - " + time + " Uhr (" + getFreeTimes(jsonObj, time) + ")");
+            /*
+             * System.out.println("    - " + time + " Uhr (" + getFreeTimes(jsonObj, time) +
+             * ")");
+             */
+
+            chooseNotation(time, jsonObj, i+1);
+        }
+    }
+
+    // decides if it should take the notation for admin or user
+    private void chooseNotation(String _time, JSONObject _jsonObj, int _counter) {
+        JSONHelper Helper = new JSONHelper();
+        JSONObject dataList = Helper.getJSONFile("src/JSONFiles/DataList.json");
+        long isAdminLoggedIn = (long) dataList.get("isAdminLoggedIn");
+
+        if (isAdminLoggedIn == 1) {
+            System.out.println("    - " + _time + " Uhr [" + getFreeTimes(_jsonObj, _time) + "]");
+        } else {
+            System.out.println("     " + _counter + ") " + _time + " Uhr [" + getFreeTimes(_jsonObj, _time) + "]");
         }
     }
 

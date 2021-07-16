@@ -81,7 +81,7 @@ public class Administrator {
         switch (selectedOption) {
             case 1:
                 Appointment AppointmentCase1 = new Appointment();
-                AppointmentCase1.showAllAppoitmentsAdmin();
+                AppointmentCase1.showAllAppoitments();
                 ;
                 break;
             case 2:
