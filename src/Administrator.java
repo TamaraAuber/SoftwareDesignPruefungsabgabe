@@ -89,7 +89,8 @@ public class Administrator {
                 AppointmentCase2.createNewAppointment();
                 break;
             case 3:
-                System.out.println("show me you stats");
+                Stats Stats = new Stats();
+                Stats.showAllStats();
                 break;
         }
 

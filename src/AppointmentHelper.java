@@ -145,7 +145,7 @@ public class AppointmentHelper {
         }
     }
 
-    private int getFreeTimes(JSONObject _time, String _timeKey) {
+    public int getFreeTimes(JSONObject _time, String _timeKey) {
         JSONArray idArray = (JSONArray) _time.get(_timeKey);
         int freeTimesCounter = 0;
 
