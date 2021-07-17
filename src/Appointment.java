@@ -45,6 +45,9 @@ public class Appointment {
             JSONHelper JSONFile = new JSONHelper();
             JSONFile.enterAppointmentInJSONFile(NewAppointment);
 
+            WaitingList Waitinglist = new WaitingList();
+            Waitinglist.workOffTheWaitingList();
+
             goBackToOptions();
         } catch (Exception e) {
             System.out.println("Irgendwas ist schief gelaufen. Versuchen sie es erneut.");
@@ -54,7 +57,7 @@ public class Appointment {
         scan.close();
     }
 
-    private void goBackToOptions() {
+    public void goBackToOptions() {
         Administrator Admin = new Administrator();
         User User = new User();
         JSONHelper Helper = new JSONHelper();

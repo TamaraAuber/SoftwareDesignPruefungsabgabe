@@ -44,26 +44,26 @@ public class User {
         AppointmentHelper AppointmentHelper = new AppointmentHelper();
         if (AppointmentHelper.checkIfTimeSlotsAreFree(_chosenDateId, _chosenTimeIndex)) {
             JSONHelper JSONFile = new JSONHelper();
+            MailService MailService = new MailService();
             try {
                 RegistrationModel registration = enterRegistrationData();
-
                 int registrationID = registration.getId();
+
+                JSONFile.enterRegitrationInList(registration, "src/JSONFiles/RegistrationList.json");
 
                 linkAppointmentWithRegistration(JSONFile, _chosenDateId, _chosenTimeIndex, registrationID);
 
-                JSONFile.enterRegitrationInList(registration, "src/JSONFiles/RegistrationList.json");
+                MailService.confirmAppointment(registrationID, _chosenDateId, _chosenTimeIndex - 1);
 
             } catch (Exception e) {
                 System.out.println("Irgendwas ist schiefgelaufen. Versuchen sie es erneut.");
                 registerForAppointment(_chosenDateId, _chosenTimeIndex);
             }
-        }
-        else {
+        } else {
             System.out.println("Für diese Uhrzeit sind keine freien Termine mehr verfügbar.");
             System.out.println("Wählen Sie einen anderen Termin.");
             userOptions();
         }
-
     }
 
     private void linkAppointmentWithRegistration(JSONHelper JSONFile, int _chosenDateID, int _chosenTimeIndex,
@@ -92,7 +92,7 @@ public class User {
 
             }
         }
-        JSONFile.updateJSONFile(appointmentList);
+        JSONFile.updateJSONFile(appointmentList,  "src/JSONFiles/AppointmentList.json");
     }
 
     public void registerForWaitingList() {

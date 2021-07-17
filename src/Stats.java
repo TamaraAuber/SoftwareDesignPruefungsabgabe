@@ -1,5 +1,5 @@
 import org.json.simple.*;
-
+import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
@@ -12,6 +12,16 @@ public class Stats {
     public void showAllStats() {
         getTotalAppointments();
         howManyOccupiedAndFreeTimes();
+
+        /* Administrator Admin = new Administrator();
+        Admin.adminOptions(); */
+        System.out.println("0) zurück");
+        Scanner scan = new Scanner(System.in);
+        if (scan.nextInt() == 0) {
+             Appointment Appointment = new Appointment();
+        Appointment.goBackToOptions(); 
+        }
+        scan.close();
     }
 
     private void getTotalAppointments() {

@@ -181,7 +181,20 @@ public class AppointmentHelper {
         } else {
             return true;
         }
+    }
 
+    public JSONObject getAppointmentOverID(int _appointmentID) {
+        JSONHelper JSONHelper = new JSONHelper();
+        JSONArray appointmentList = JSONHelper.getJSONArray("src/JSONFiles/AppointmentList.json");
+        JSONObject searchedAppointment = null;
+
+        for (int i = 0; i < appointmentList.size(); i++) {
+            JSONObject appointment = (JSONObject) appointmentList.get(i);
+            if (Integer.parseInt(appointment.get("ID").toString()) == _appointmentID) {
+                searchedAppointment = appointment;
+            }
+        }
+        return searchedAppointment;
     }
 
 }

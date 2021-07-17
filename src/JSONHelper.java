@@ -112,8 +112,8 @@ public class JSONHelper {
         }
     }
 
-    public void updateJSONFile(JSONArray _jsonFile) {
-        try (FileWriter file = new FileWriter("src/JSONFiles/AppointmentList.json")) {
+    public void updateJSONFile(JSONArray _jsonFile, String _fileName) {
+        try (FileWriter file = new FileWriter(_fileName)) {
             file.write(_jsonFile.toJSONString());
             System.out.println("updated File");
         } catch (IOException e) {
