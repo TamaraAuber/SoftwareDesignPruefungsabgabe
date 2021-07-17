@@ -11,6 +11,10 @@ public class MailService {
         sendConfirmationEMail();
     }
 
+    public void sendInformationToUserFromWaitingList(int _registration) {
+        sendConfirmationEMail();
+    }
+
     private void writeConfirmationOverRegistration(int _registrationID, int _appointmentID, int _chosenTimeIndex) {
         String date = getAppointmentDate(_appointmentID);
         String time = getAppointmentTime(_appointmentID, _chosenTimeIndex);

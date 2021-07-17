@@ -57,6 +57,7 @@ public class WaitingList {
 
     private void moveUserToRegistrationList(JSONObject _user) {
         JSONHelper JSONHelper = new JSONHelper();
+        MailService MailService = new MailService();
 
         try {
             int id = Integer.parseInt(_user.get("ID").toString());
@@ -71,12 +72,14 @@ public class WaitingList {
             String city = _user.get("City").toString();
 
             RegistrationModel Registration = new RegistrationModel(id, eMail, firstName, lastName,
-            LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("dd-MM-yyyy")), phoneNumber, street,
+                    LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("dd-MM-yyyy")), phoneNumber, street,
                     houseNumber, postalCode, city);
             JSONHelper.enterRegitrationInList(Registration, "src/JSONFiles/RegistrationList.json");
+
+            MailService.sendInformationToUserFromWaitingList(id);
         } catch (Exception e) {
-            System.out.println("Oh No");
-            e.printStackTrace();
+            System.out.println("Fehler beim EIntragen des Users in die Registrierungsliste.");
+            // e.printStackTrace();
         }
 
     }
