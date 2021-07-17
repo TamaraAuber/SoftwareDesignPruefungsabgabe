@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.time.Duration;
 import java.util.Set;
+import java.util.Scanner;
 
 public class AppointmentHelper {
 
@@ -128,7 +129,7 @@ public class AppointmentHelper {
              * ")");
              */
 
-            chooseNotation(time, jsonObj, i+1);
+            chooseNotation(time, jsonObj, i + 1);
         }
     }
 
@@ -156,6 +157,31 @@ public class AppointmentHelper {
         }
 
         return freeTimesCounter;
+    }
+
+    public boolean checkIfTimeSlotsAreFree(int _chosenDateId, int _chosenTimeSlot) {
+        int chosenTimeSlot = _chosenTimeSlot- 1;
+        JSONHelper Helper = new JSONHelper();
+        JSONArray appointmentList = Helper.getJSONArray("src/JSONFiles/AppointmentList.json");
+        int availableTimes = 0;
+
+        for (int i = 0; i < appointmentList.size(); i++) {
+            JSONObject appointment = (JSONObject) appointmentList.get(i);
+            if (Integer.parseInt(appointment.get("ID").toString()) == _chosenDateId) {
+                JSONArray times = (JSONArray) appointment.get("Times");
+                JSONObject jsonObj = (JSONObject) times.get(chosenTimeSlot);
+                Set<String> timeSet = jsonObj.keySet();
+                String time = timeSet.iterator().next();
+                availableTimes = getFreeTimes(jsonObj, time);
+            }
+        }
+
+        if (availableTimes == 0) {
+            return false;
+        } else {
+            return true;
+        }
+
     }
 
 }

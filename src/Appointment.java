@@ -99,9 +99,10 @@ public class Appointment {
             if (!Helper.areAllTimesTaken(selectedOption - 1, appointmentArray)) {
                 getSelectedDay(selectedOption, appointmentArray);
                 System.out.println("0) zurück");
-                if (scan.nextInt() == 0) {
-                    goBackToOptions();
-                }
+                goBackOrRegister(scan);
+                /*
+                 * if (scan.nextInt() == 0) { goBackToOptions(); }
+                 */
             } else {
                 System.out.println("Für dieses Datum gibt es keine freien Termine.");
                 System.out.println("Wählen Sie ein anderes Datum.");
@@ -133,6 +134,27 @@ public class Appointment {
     private void noteIdOfSelectedDate(int _idOfSelectedDate) {
         JSONHelper Helper = new JSONHelper();
         Helper.updateKeyValue("src/JSONFiles/DataList.json", "IdOfLastSelectedDate", _idOfSelectedDate);
+    }
+
+    private void goBackOrRegister(Scanner scan) {
+        int selectedOption = scan.nextInt();
+        if (selectedOption == 0) {
+            goBackToOptions();
+        } else {
+            startRegistration(selectedOption);
+        }
+    }
+
+    private void startRegistration(int _selectedOption) {
+        JSONHelper Helper = new JSONHelper();
+        JSONObject dataList = Helper.getJSONFile("src/JSONFiles/DataList.json");
+        long isAdminLoggedIn = (long) dataList.get("isAdminLoggedIn");
+
+        if (isAdminLoggedIn == 0) {
+            User User = new User();
+            long idOfSelectedDay = (long) dataList.get("IdOfLastSelectedDate");
+            User.registerForAppointment((int) idOfSelectedDay, _selectedOption);
+        }
     }
 
 }

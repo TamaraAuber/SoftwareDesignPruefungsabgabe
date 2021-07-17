@@ -16,7 +16,6 @@ public class User {
     public void userOptions() {
         Scanner scanInt = new Scanner(System.in);
         Scanner scanString = new Scanner(System.in);
-        Scanner scanOption = new Scanner(System.in);
 
         System.out.println("1) Übersicht aller Termine");
         System.out.println("2) nach Datum suchen");
@@ -27,14 +26,6 @@ public class User {
             case 1:
                 Appointment Appointment = new Appointment();
                 Appointment.showAllAppoitments();
-                test();
-
-                /*
-                 * JSONHelper Helper = new JSONHelper(); JSONObject dataList =
-                 * Helper.getJSONFile("src/JSONFiles/DataList.json"); long idOfSelectedDay =
-                 * (long) dataList.get("IdOfLastSelectedDate"); registerForAppointment((int)
-                 * idOfSelectedDay, selectedTime);
-                 */
                 break;
             case 2:
                 System.out.println("Geben sie das gesuchte Datum ein:");
@@ -49,32 +40,28 @@ public class User {
         scanString.close();
     }
 
-    private void test() {
-        Scanner scanInt = new Scanner(System.in);
-       
-        int selectedTime = scanInt.nextInt();
-
-        System.out.println(selectedTime);
-
-        scanInt.close();
-    }
-
     public void registerForAppointment(int _chosenDateId, int _chosenTimeIndex) {
-        System.out.println("ID " + _chosenDateId + " time " + _chosenTimeIndex);
-        JSONHelper JSONFile = new JSONHelper();
+        AppointmentHelper AppointmentHelper = new AppointmentHelper();
+        if (AppointmentHelper.checkIfTimeSlotsAreFree(_chosenDateId, _chosenTimeIndex)) {
+            JSONHelper JSONFile = new JSONHelper();
+            try {
+                RegistrationModel registration = enterRegistrationData();
 
-        try {
-            RegistrationModel registration = enterRegistrationData();
+                int registrationID = registration.getId();
 
-            int registrationID = registration.getId();
+                linkAppointmentWithRegistration(JSONFile, _chosenDateId, _chosenTimeIndex, registrationID);
 
-            linkAppointmentWithRegistration(JSONFile, _chosenDateId, _chosenTimeIndex, registrationID);
+                JSONFile.enterRegitrationInList(registration, "src/JSONFiles/RegistrationList.json");
 
-            JSONFile.enterRegitrationInList(registration, "src/JSONFiles/RegistrationList.json");
-
-        } catch (Exception e) {
-            System.out.println("Irgendwas ist schiefgelaufen. Versuchen sie es erneut.");
-            registerForAppointment(_chosenDateId, _chosenTimeIndex);
+            } catch (Exception e) {
+                System.out.println("Irgendwas ist schiefgelaufen. Versuchen sie es erneut.");
+                registerForAppointment(_chosenDateId, _chosenTimeIndex);
+            }
+        }
+        else {
+            System.out.println("Für diese Uhrzeit sind keine freien Termine mehr verfügbar.");
+            System.out.println("Wählen Sie einen anderen Termin.");
+            userOptions();
         }
 
     }
@@ -198,7 +185,7 @@ public class User {
         return false;
     }
 
-    private boolean validateEMail(String _eMail) {
+    public boolean validateEMail(String _eMail) {
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(_eMail);
