@@ -67,7 +67,7 @@ public class Stats {
             totalFreeTimes = totalFreeTimes + availableTimes;
 
             // looks up how many free dates are in the past and how many are in the future
-            if (istDateInThePast(appointment)) {
+            if (isDateInThePast(appointment)) {
                 totalFreeTimesPast = totalFreeTimesPast + availableTimes;
             } else {
                 totalFreeTimesFuture = totalFreeTimesFuture + availableTimes;
@@ -79,7 +79,7 @@ public class Stats {
         outputStats(allTimes, totalFreeTimes, totalFreeTimesPast, totalFreeTimesFuture, totalOccupiedTimes);
     }
 
-    private boolean istDateInThePast(JSONObject _appointment) {
+    private boolean isDateInThePast(JSONObject _appointment) {
         LocalDate today = LocalDate.now();
         String appointmentDateString = _appointment.get("Date").toString();
         LocalDate appointmentDate = LocalDate.parse(appointmentDateString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));

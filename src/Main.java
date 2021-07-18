@@ -42,7 +42,6 @@ public class Main {
                 chooseCase1ForUser();
                 break;
             case 2:
-                System.out.println("OptionLogIn");
                 Administrator Admin = new Administrator();
                 Admin.logIn();
                 break;

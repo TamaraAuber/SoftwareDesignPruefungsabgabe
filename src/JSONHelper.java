@@ -14,7 +14,7 @@ public class JSONHelper {
             return jsonArray;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return jsonArray;
     }
