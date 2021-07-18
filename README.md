@@ -2,7 +2,7 @@
 
 Abgabe für das Fach SoftwareDesign
 Prüfungsaufgabe: Vaccination Appointments App
-Erstellt von: Tamara Auber, MIB, 4 Matr.-Nr: 263618 
+Erstellt von: Tamara Auber, MIB 4, Matr.-Nr: 263618 
 
 
 
