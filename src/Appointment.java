@@ -1,12 +1,8 @@
-import java.io.FileReader;
 import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import java.util.Set;
-
 import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
 
 public class Appointment {
 
@@ -15,6 +11,11 @@ public class Appointment {
 
     public void createNewAppointment() {
         Scanner scan = new Scanner(System.in);
+
+        System.out.println("");
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("Erstellen Sie einen Termin.");
+        System.out.println("");
 
         System.out.print("Datum (z.B. 12.03.2021): ");
         String enteredDate = scan.nextLine();
@@ -76,7 +77,10 @@ public class Appointment {
 
         AppointmentHelper Helper = new AppointmentHelper();
 
+        System.out.println("");
+        System.out.println("------------------------------------------------------------------------------------------------");
         System.out.println("Wählen Sie ein Datum!");
+        System.out.println("");
 
         System.out.println("0) zurück");
 
@@ -103,12 +107,10 @@ public class Appointment {
                 getSelectedDay(selectedOption, appointmentArray);
                 System.out.println("0) zurück");
                 goBackOrRegister(scan);
-                /*
-                 * if (scan.nextInt() == 0) { goBackToOptions(); }
-                 */
             } else {
                 System.out.println("Für dieses Datum gibt es keine freien Termine.");
                 System.out.println("Wählen Sie ein anderes Datum.");
+                System.out.println("");
                 showAllAppoitments();
             }
 
@@ -139,8 +141,8 @@ public class Appointment {
         Helper.updateKeyValue("src/JSONFiles/DataList.json", "IdOfLastSelectedDate", _idOfSelectedDate);
     }
 
-    private void goBackOrRegister(Scanner scan) {
-        int selectedOption = scan.nextInt();
+    private void goBackOrRegister(Scanner _scan) {
+        int selectedOption = _scan.nextInt();
         if (selectedOption == 0) {
             goBackToOptions();
         } else {

@@ -1,15 +1,7 @@
 import org.json.simple.*;
-
-import java.lang.reflect.Array;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.time.Duration;
 import java.util.Set;
-import java.util.Scanner;
 
 public class AppointmentHelper {
 
@@ -18,7 +10,6 @@ public class AppointmentHelper {
 
     // scans the entire appointment list for free appointments
     public boolean areThereFreeAppointments() {
-        AppointmentHelper Helper = new AppointmentHelper();
         JSONHelper JSONFile = new JSONHelper();
         JSONArray appointmentArray = JSONFile.getJSONArray("src/JSONFiles/AppointmentList.json");
         int allAppointmentDays = appointmentArray.size();
@@ -30,7 +21,7 @@ public class AppointmentHelper {
 
         for (int i = 0; i < appointmentArray.size(); i++) {
 
-            if (Helper.areAllTimesTaken(i, appointmentArray)) {
+            if (areAllTimesTaken(i, appointmentArray)) {
                 occupiedAppointmentDays++;
             }
 
@@ -70,6 +61,7 @@ public class AppointmentHelper {
 
     }
 
+    //fills timeSlots with 0, so they can later be replaced with RegistrationIds
     private JSONArray fillIdArray(int _concurrentVaccinations) {
         JSONArray idArray = new JSONArray();
 
@@ -123,11 +115,6 @@ public class AppointmentHelper {
             Set<String> timeSet = jsonObj.keySet();
 
             String time = timeSet.iterator().next();
-
-            /*
-             * System.out.println("    - " + time + " Uhr (" + getFreeTimes(jsonObj, time) +
-             * ")");
-             */
 
             chooseNotation(time, jsonObj, i + 1);
         }

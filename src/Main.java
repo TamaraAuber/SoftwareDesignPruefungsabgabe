@@ -10,24 +10,30 @@ public class Main {
     }
 
     public static void welcomeUser() {
-        System.out.println("Henlo bei der superduper besten VaccinationAppointmenApp :-)");
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("");
+        System.out.println("Hallo und Willkommen bei der VaccinationAppointmentApp!");
+        System.out.println("");
+        System.out.println("------------------------------------------------------------------------------------------------");
     }
 
     public static void userOrAdmin() {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Termin buchen oder als Administrator fortfahren?");
-        System.out.println("Wählen sie dazu eine der Nummern aus");
+        System.out.println("");
+        System.out.println("Geben Sie eine Zahl ein, um Ihre nächste Option auszuwählen.");
+        System.out.println("");
 
         AppointmentHelper AppointmentHelper = new AppointmentHelper();
         if (AppointmentHelper.areThereFreeAppointments()) {
             System.out.println("1) Termin buchen");
         } else {
-            System.out.println("Momentan sind keine freien Termine verfügbar");
+            System.out.println("Momentan sind keine freien Termine verfügbar. Wollen Sie sich in die Warteliste eintragen?");
+            System.out.println("");
             System.out.println("1) in die Warteliste eintragen");
         }
 
-        System.out.println("2) als Administrator anmelden");
+        System.out.println("2) als Administrator fortfahren");
 
         int selectedOption = scan.nextInt();
 

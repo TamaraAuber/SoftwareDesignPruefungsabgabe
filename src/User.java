@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.json.simple.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +16,10 @@ public class User {
         Scanner scanInt = new Scanner(System.in);
         Scanner scanString = new Scanner(System.in);
 
+        System.out.println("");
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("");
+
         System.out.println("1) Übersicht aller Termine");
         System.out.println("2) nach Datum suchen");
 
@@ -28,7 +31,8 @@ public class User {
                 Appointment.showAllAppoitments();
                 break;
             case 2:
-                System.out.println("Geben sie das gesuchte Datum ein:");
+                System.out.println("");
+                System.out.println("Geben sie das gesuchte Datum ein (z.B. 13.09.2021):");
                 String enteredDate = scanString.nextLine();
                 LocalDate date = LocalDate.parse(enteredDate, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
                 String searchedDate = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
@@ -60,6 +64,7 @@ public class User {
                 registerForAppointment(_chosenDateId, _chosenTimeIndex);
             }
         } else {
+            System.out.println("");
             System.out.println("Für diese Uhrzeit sind keine freien Termine mehr verfügbar.");
             System.out.println("Wählen Sie einen anderen Termin.");
             userOptions();
@@ -111,6 +116,7 @@ public class User {
         Scanner scanString = new Scanner(System.in);
         Scanner scanInt = new Scanner(System.in);
 
+        System.out.println("");
         System.out.println("Bei der Registrierung bitte keine Sonderzeichen benutzen (ä, ö, ü, ß).");
 
         String enteredEMail = getEMailAdress(scanString);
@@ -162,11 +168,13 @@ public class User {
         JSONArray registrationList = Helper.getJSONArray("src/JSONFiles/RegistrationList.json");
         JSONArray waitingList = Helper.getJSONArray("src/JSONFiles/WaitingList.json");
         if (findEmailInList(enteredEMail, registrationList) || findEmailInList(enteredEMail, waitingList)) {
+            System.out.println("");
             System.out
                     .println("Diese E-Mail-Adresse ist bereits registriert. Geben Sie eine andere E-Mail-Adresse ein!");
             enteredEMail = getEMailAdress(_scan);
         }
         if (!validateEMail(enteredEMail)) {
+            System.out.println("");
             System.out.println("Dies ist keine gültige E-Mail-Adresse. Geben Sie eine andere E-Mail-Adresse ein!");
             enteredEMail = getEMailAdress(_scan);
         }
@@ -198,6 +206,7 @@ public class User {
         JSONArray appointmentArray = Helper.getJSONArray("src/JSONFiles/AppointmentList.json");
 
         if (findIndexOfDate(_searchedDate, appointmentArray) == -1) {
+            System.out.println("");
             System.out.println("Für dieses Datum gibt es leider keine Termine.");
             userOptions();
         } else {
@@ -224,6 +233,7 @@ public class User {
         AppointmentHelper Helper = new AppointmentHelper();
 
         if (!Helper.areAllTimesTaken(_indexOfDate, _appointmentArray)) {
+            System.out.println("");
             System.out.println("0) zurück");
             System.out.println("Wählen Sie eine Uhrzeit für die Sie sich registrieren möchten.");
 
@@ -239,6 +249,7 @@ public class User {
             }
 
         } else {
+            System.out.println("");
             System.out.println("Für dieses Datum sind alle Termine bereits vergeben.");
             userOptions();
         }

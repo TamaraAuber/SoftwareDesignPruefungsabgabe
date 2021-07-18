@@ -2,9 +2,6 @@ import java.time.LocalDate;
 
 public class RegistrationModel {
 
-    // in der JSON Datei dnn noch JSONObjekt "Appointment hinzufügen" wo dann id und
-    // Uhrzeit drinstehen
-
     private int id;
     private String eMail;
     private String firstName;

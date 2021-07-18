@@ -10,14 +10,8 @@ public class WaitingList {
 
     public void workOffTheWaitingList() {
         AppointmentHelper AppointmentHelper = new AppointmentHelper();
-        JSONHelper JSONHelper = new JSONHelper();
 
         if (AppointmentHelper.areThereFreeAppointments()) {
-            System.out.println("Wooooooooorking on WaitingList");
-
-            JSONArray appointmentList = JSONHelper.getJSONArray("src/JSONFiles/AppointmentList.json");
-            JSONArray waitingList = JSONHelper.getJSONArray("src/JSONFiles/WaitingList.json");
-
             linkFreeAppointmentsToUser();
 
         }
@@ -78,7 +72,7 @@ public class WaitingList {
 
             MailService.sendInformationToUserFromWaitingList(id);
         } catch (Exception e) {
-            System.out.println("Fehler beim EIntragen des Users in die Registrierungsliste.");
+            System.out.println("Fehler beim Eintragen des Users in die Registrierungsliste.");
             // e.printStackTrace();
         }
 

@@ -1,12 +1,8 @@
 import java.io.*;
-import java.util.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 import java.time.format.DateTimeFormatter;
-import java.io.StringWriter;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class JSONHelper {
 
@@ -18,7 +14,7 @@ public class JSONHelper {
             return jsonArray;
 
         } catch (Exception e) {
-            /* e.printStackTrace(); */
+            e.printStackTrace();
         }
         return jsonArray;
     }
@@ -29,7 +25,6 @@ public class JSONHelper {
         JSONObject appointment = new JSONObject();
         appointment.put("ID", _Appointment.getId());
         appointment.put("Date", _Appointment.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-        /* appointment.put("Date", _Appointment.getDate().toString()); */
         appointment.put("TimePeriodStart", _Appointment.getTimePeriodStart().toString());
         appointment.put("TimePeriodEnd", _Appointment.getTimePeriodEnd().toString());
         appointment.put("ConcurrentVaccinations", _Appointment.getConcurrentVaccinations());
@@ -40,16 +35,11 @@ public class JSONHelper {
                 _Appointment.getTimeIntervalls(), _Appointment.getConcurrentVaccinations());
         appointment.put("Times", times);
 
-        /*
-         * JSONObject appointment = new JSONObject(); appointment.put("Appointment",
-         * appointmentData);
-         */
-
         appointmentFile.add(appointment);
 
         try (FileWriter file = new FileWriter("src/JSONFiles/AppointmentList.json")) {
             file.write(appointmentFile.toJSONString());
-            System.out.println("Appointment created");
+            //System.out.println("Appointment created");
         } catch (IOException e) {
             System.out.println("Error while writing json file");
         }
@@ -74,7 +64,7 @@ public class JSONHelper {
 
         try (FileWriter file = new FileWriter(_jsonFile)) {
             file.write(waitingList.toJSONString());
-            System.out.println("Registration entered");
+            //System.out.println("Registration entered");
         } catch (IOException e) {
             System.out.println("Error while writing json file");
         }
@@ -96,7 +86,7 @@ public class JSONHelper {
     public void updateDataList(JSONObject _updatedDataList) {
         try (FileWriter file = new FileWriter("src/JSONFiles/DataList.json")) {
             file.write(_updatedDataList.toJSONString());
-            System.out.println("created first id");
+            //System.out.println("created first id");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,7 +105,7 @@ public class JSONHelper {
     public void updateJSONFile(JSONArray _jsonFile, String _fileName) {
         try (FileWriter file = new FileWriter(_fileName)) {
             file.write(_jsonFile.toJSONString());
-            System.out.println("updated File");
+            //System.out.println("updated File");
         } catch (IOException e) {
             System.out.println("Error while writing json file");
         }

@@ -13,8 +13,6 @@ public class Stats {
         getTotalAppointments();
         howManyOccupiedAndFreeTimes();
 
-        /* Administrator Admin = new Administrator();
-        Admin.adminOptions(); */
         System.out.println("0) zurück");
         Scanner scan = new Scanner(System.in);
         if (scan.nextInt() == 0) {
@@ -97,11 +95,16 @@ public class Stats {
         double totalFreeTimesPastINPercent = (double) _totalFreeTimesPast / (double) _allTimes * 100;
         double totalFreeTimesFutureInPercent = (double) _totalFreeTimesFuture / (double) _allTimes * 100;
 
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("Statistik:");
+        System.out.println("");
+
         System.out.println("     - Von allen Terminen sind aktuell " + String.format("%.2f", totalOccupiedTimesInPercent)
                 + "% (" + _totalOccupiedTimes + " Termine) belegt");
         System.out.println(
                 "       und " + String.format("%.2f", totalFreeTimesInPercent) + "% (" + _totalFreeTimes + " Termine) frei");
-        
+        System.out.println("");
+               
         System.out.println("     - Davon liegen aktuell " + String.format("%.2f", totalFreeTimesFutureInPercent) + "% (" + _totalFreeTimesFuture + " Termine) in der Zukunft");
         System.out.println("     - Davon lagen " + String.format("%.2f", totalFreeTimesPastINPercent) + "% (" + _totalFreeTimesPast + " Termine) in der Vergangenheit und sind somit ungenutzt.");
 

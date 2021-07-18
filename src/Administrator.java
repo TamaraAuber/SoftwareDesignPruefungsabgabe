@@ -3,16 +3,19 @@ import org.json.simple.*;
 
 public class Administrator {
 
-    private String username = "Batman";
-    private String password = "NaNaNa!";
+    private String username = "Admin";
+    private String password = "VaccApp!";
 
     public Administrator() {
 
     }
 
-    // ToDo: Bug wenn im Benutzernamen Leerzeichen sind
     public void logIn() {
         Scanner scan = new Scanner(System.in);
+
+        System.out.println("");
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("");
 
         System.out.print("Benutzername: ");
         String enteredUsername = scan.nextLine();
@@ -21,11 +24,10 @@ public class Administrator {
         String enteredPassword = scan.nextLine();
 
         if (validateLogInData(enteredUsername, enteredPassword)) {
-            System.out.println("Welcome to the Batcave Mr. Wayne");
             adminLogIn();
             adminOptions();
         } else {
-            System.out.println("Activated Selfdestruction. Try again");
+            System.out.println("Benutzername oder Passwort nicht korrekt. Versuchen Sie es erneut!");
             logIn();
         }
 
@@ -47,7 +49,7 @@ public class Administrator {
             JSONFile.updateKeyValue("src/JSONFiles/DataList.json", "isAdminLoggedIn", 1);
 
         } catch (Exception e) {
-            System.out.println("Faaaaaaaaaaaaaaaaaaail");
+            System.out.println("Fehler bei der Anmeldung!");
             dataList.put("isAdminLoggedIn", 0);
             JSONFile.updateDataList(dataList);
         }
@@ -61,7 +63,7 @@ public class Administrator {
             JSONFile.updateKeyValue("src/JSONFiles/DataList.json", "isAdminLoggedIn", 0);
 
         } catch (Exception e) {
-            System.out.println("Faaaaaaaaaaaaaaaaaaail");
+            System.out.println("Fehler bei LogOut!");
             dataList.put("isAdminLoggedIn", 0);
             JSONFile.updateDataList(dataList);
         }
@@ -70,7 +72,11 @@ public class Administrator {
     public void adminOptions() {
         Scanner scan = new Scanner(System.in);
 
+        System.out.println("");
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("");
         System.out.println("Wählen sie ihren nächsten Schritt");
+        System.out.println("");
 
         System.out.println("1) Übersicht Termine");
         System.out.println("2) neuen Termin anlegen");
